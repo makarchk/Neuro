@@ -276,6 +276,8 @@ print("Done.")
 ```python
 from CapsuleSDK.EEGTimedData import EEGTimedData
 
+device_eeg_event = EventFiredState()
+
 # Функция-обработчик для передачи данных ЭЭГ
 def on_eeg(dev, eeg: EEGTimedData):
     # Получаем количество сэмплов (точек данных) в этом блоке
