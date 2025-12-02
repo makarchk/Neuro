@@ -135,22 +135,28 @@ def non_blocking_cond_wait(wake_event: EventFiredState, name: str, total_sleep_t
 # Обработчик получения списка найденных устройств
 # Вызывается автоматически SDK после сканирования
 
-TARGET_SERIAL = "821619"
+TARGET_SERIAL = None # example: "821619"
+
 def on_device_list(locator, info, fail_reason):
     global device
+    chosen = None
 
     if len(info) == 0:
         print("No devices found.")
         return
 
     print(f"Found {len(info)} devices.")
-    
-    chosen = None
-    for dev in info:
-        print(" device:", dev.get_serial(), dev.get_name())
-        if dev.get_serial() == TARGET_SERIAL:
-            chosen = dev
-            break
+
+    if TARGET_SERIAL is None:
+        print(f"Using first device:")
+        chosen = info[0]
+
+    else:
+        for dev in info:
+            print(" device:", dev.get_serial(), dev.get_name())
+            if dev.get_serial() == TARGET_SERIAL:
+                chosen = dev
+                break
 
     if chosen is None:
         print(f"Target device {TARGET_SERIAL} not found!")
@@ -159,9 +165,9 @@ def on_device_list(locator, info, fail_reason):
     print()
     print("Connecting to:")
     print("Serial:", chosen.get_serial())
-    #TO DO
+    # TO DO
 
-    #TO DO
+    # TO DO
 
     device = Device(locator, chosen.get_serial(), locator.get_lib())
     device_list_event.set_awake()
