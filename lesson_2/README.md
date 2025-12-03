@@ -507,6 +507,8 @@ ax_progress.grid(True, axis='x')
 ```
 #### Обновление прогресса для каждого канала в функции `update_plot`
 ```python
+global alpha_avg_history, time_history, progress_value, last_accum_time
+
 # Средняя альфа по всем каналам
     current_alpha = []
     for i in range(num_ch):
@@ -520,8 +522,7 @@ ax_progress.grid(True, axis='x')
     MAX_HISTORY = 100
     if len(time_history) > MAX_HISTORY:
         time_history[:] = time_history[-MAX_HISTORY:]
-        for i in range(CHANNELS):
-            alpha_history[i] = alpha_history[i][-MAX_HISTORY:]
+        alpha_avg_history[:] = alpha_avg_history[:][-MAX_HISTORY:]
 
     # Обновляем график средней альфа
     if time_history:
