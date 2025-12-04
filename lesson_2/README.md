@@ -227,6 +227,9 @@ def main():
 
     device_locator = DeviceLocator(capsuleLib.get_lib())
     device_locator.set_on_devices_list(on_device_list)
+    # Также вы можете использовать подключения к генераторам синусоид, чтобы идти по ходу занятия
+    # device_locator.request_devices(device_type=DeviceType.Noise, seconds_to_search=10) 
+    # или device_type=DeviceType.SinWave
     device_locator.request_devices(device_type=DeviceType.Band, seconds_to_search=10)
 
     if not non_blocking_cond_wait(device_list_event, 'device list', 12):
